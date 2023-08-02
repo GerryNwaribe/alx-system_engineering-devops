@@ -1,2 +1,2 @@
 #!/bin/bash
-ls -mp -a sort -d . ..  
+ls -lampm .  
