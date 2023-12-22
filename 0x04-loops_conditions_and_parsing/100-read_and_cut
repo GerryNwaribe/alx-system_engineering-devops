@@ -4,6 +4,7 @@
 #username
 #user id
 #Home directory path for the user
+
 passwd_file="/etc/passwd"
 while IFS=: read -r username x uid gid gecos home shell; do
     echo "$username:$uid:$home"
