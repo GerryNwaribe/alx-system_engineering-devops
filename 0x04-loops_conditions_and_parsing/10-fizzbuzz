@@ -7,9 +7,9 @@
 #Otherwise, displays the number
 #In a list format
 
-a=0
+a=1
 
-while [ "$a" -lt 101 ]; do
+while [ "$a" -le 100 ]; do
     if [ $((a % 3)) -eq 0 ] && [ $((a % 5)) -eq 0 ]; then
         echo "FizzBuzz"
     elif [ $((a % 3)) -eq 0 ]; then
