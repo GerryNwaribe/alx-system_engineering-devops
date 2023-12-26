@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Bash script that displays the PID
+#along with the process name, of processes whose name contain the word bash
+
+# Iterate over the directories in /proc
+for pid in /proc/*/; do
+    pid=${pid%/} # Remove trailing slash
+    pname=$(cat "$pid/comm" 2>/dev/null) # Read the process name from /proc/<pid>/comm
+
+    # Check if the process name contains the word "bash"
+    if [[ $pname == *bash* ]]; then
+        # Extract the PID from the directory name
+        pid=$(basename "$pid")
+        echo "$pid $pname"
+    fi
+done
