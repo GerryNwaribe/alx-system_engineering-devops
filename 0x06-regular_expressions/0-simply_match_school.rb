@@ -7,7 +7,7 @@ if ARGV.empty?
     input_string = ARGV[0]
   
     # Regular expression matching
-    match = input_string.scan(/(?=(School))/).flatten
+    match = input_string.scan(/Scho.l/)
   
     # Output the result
     if match.any?
@@ -16,3 +16,4 @@ if ARGV.empty?
       puts "No match"
     end
   end
+  
