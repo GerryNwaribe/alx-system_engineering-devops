@@ -4,13 +4,14 @@ if ARGV.empty?
     puts "Please provide an argument."
   else
     input_string = ARGV[0]
-
-    match = input_string.scan(/hbt+n/)
-
+  
+    # Regular expression matching
+    match = input_string.scan(/hbt{2,5}n/).flatten
+  
     # Output the result
     if match.any?
         puts match.join
     else
-        puts "No match"
+      puts ""
     end
-end
+  end
