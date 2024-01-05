@@ -10,14 +10,3 @@ else
         end
     end
 end
-  
-    # Regular expression matching
-    match = input_string.scan(/Scho.l/)
-  
-    # Output the result
-    if match.any?
-        puts match.join
-    else
-      puts "No match"
-    end
-  end
