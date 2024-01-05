@@ -4,22 +4,7 @@
 
 #localhost resolves to 127.0.0.2
 #facebook.com resolves to 8.8.8.8.
-# Backup original /etc/hosts to ~/hosts.original
-cp /etc/hosts ~/hosts.original
-
-# Create a temporary file for modifications
-tmpfile=$(mktemp)
-echo "127.0.0.2 localhost" > "$tmpfile"
-echo "8.8.8.8 facebook.com" >> "$tmpfile"
-
-# Overwrite /etc/hosts with the modified content
-sudo install -o root -g root -m 644 "$tmpfile" /etc/hosts
-
-# Display the updated /etc/hosts file
-cat /etc/hosts
-
-# Restart networking to apply changes
-sudo systemctl restart networking
-
-# Remove the temporary file
-rm "$tmpfile"
+cp /etc/hosts ~/hosts.new
+echo "127.0.0.2		localhost" > ~/hosts.new
+echo "8.8.8.8		facebook.com" >> ~/hosts.new
+cp -f ~/hosts.new /etc/hosts
