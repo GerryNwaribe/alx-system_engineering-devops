@@ -1,13 +1,12 @@
 #!/usr/bin/env ruby
-#matching a string that starts with h ends with n 
-#and can have any single character in between
+# regular expression must match a 10 digit phone number
 if ARGV.empty?
     puts "Please provide an argument."
   else
     input_string = ARGV[0]
   
     # Regular expression matching
-    match = input_string.scan(/^h.n$/)
+    match = input_string.scan(/\d{10}/)
   
     # Output the result
     if match.any?
