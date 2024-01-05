@@ -13,6 +13,6 @@ if ARGV.empty?
     if match.any?
         puts match.join
     else
-      puts "No match"
+      puts ""
     end
   end
