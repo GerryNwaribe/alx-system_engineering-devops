@@ -3,8 +3,13 @@
 # Check if an argument is provided
 if ARGV.empty?
     puts "Please provide an argument."
-  else
-    input_string = ARGV[0]
+else
+    for a in ARGV do
+        if a.match(/Scho.l/)
+            puts "#{a}"
+        end
+    end
+end
   
     # Regular expression matching
     match = input_string.scan(/Scho.l/)
@@ -16,4 +21,3 @@ if ARGV.empty?
       puts "No match"
     end
   end
-  
