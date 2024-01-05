@@ -6,7 +6,7 @@ if ARGV.empty?
     input_string = ARGV[0]
   
     # Regular expression matching
-    match = input_string.scan(/\d{10}/)
+    match = input_string.scan(/^\d{10}$/)
   
     # Output the result
     if match.any?
