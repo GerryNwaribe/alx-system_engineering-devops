@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Define server and private key file
-server="ubuntu@54.209.215.201"
+server="ubuntu@54.237.72.61"
 private_key="~/.ssh/school"
 
 # SSH connection using single-character flags
