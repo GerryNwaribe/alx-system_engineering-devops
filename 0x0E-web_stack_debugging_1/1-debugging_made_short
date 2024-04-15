@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # Variation of task 0
-rm /etc/nginx/sites-enabled/default
-ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-service nginx restart
+sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo systemctl status nginx
+kill "$(pgrep 'nginx' | head -1)"
