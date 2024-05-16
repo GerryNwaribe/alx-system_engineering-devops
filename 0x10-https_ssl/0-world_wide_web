@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Function to display subdomain information
+display_info() {
+  local domain=$1
+  local subdomain=$2
+
+  # Get the record type and destination using dig and awk
+  result=$(dig +short $subdomain.$domain ANY)
+  record_type=$(dig +noall +answer $subdomain.$domain ANY | awk '{print $4}')
+  destination=$(echo $result | awk '{print $1}')
+
+  # Output the information
+  echo "The subdomain $subdomain is a $record_type record and points to $destination"
+}
+
+# Main script execution
+main() {
+  domain=$1
+  subdomain=$2
+
+  if [ -z "$domain" ]; then
+    echo "Domain is mandatory."
+    exit 1
+  fi
+
+  if [ -n "$subdomain" ]; then
+    # Display information for the specified subdomain
+    display_info $domain $subdomain
+  else
+    # Display information for default subdomains
+    for sub in www lb-01 web-01 web-02; do
+      display_info $domain $sub
+    done
+  fi
+}
+
+# Call the main function with all script arguments
+main $@
