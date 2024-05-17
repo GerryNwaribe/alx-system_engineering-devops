@@ -1,39 +1,16 @@
 #!/usr/bin/env bash
+# write a Bash script that will display information about subdomains.
 
-# Function to display subdomain information
-display_info() {
-	local domain=$1
-	local subdomain=$2
-
-  # Get the record type and destination using dig and awk
-  result=$(dig +short "$subdomain"."$domain" ANY)
-  record_type=$(dig +noall +answer "$subdomain"."$domain" ANY | awk '{print $4}')
-  destination=$(echo "$result" | awk '{print $1}')
-
-  # Output the information
-  echo "The subdomain $subdomain is a $record_type record and points to $destination"
+print_domain_subdomain () {
+    dig "$1" | grep -A1 'ANSWER SECTION:' | sed -r "s/$1./$2/g" | awk -F" " ' NR==2 { print "The subdomain " $1 " is a " $4 " record and points to " $5 }'
 }
 
-# Main script execution
-main() {
-	domain=$1
-	subdomain=$2
-
-	if [ -z "$domain" ]; then
-		echo "Domain is mandatory."
-		exit 1
-	fi
-
-	if [ -n "$subdomain" ]; then
-		# Display information for the specified subdomain
-		display_info "$domain" "$subdomain"
-	else
-		# Display information for default subdomains
-		for sub in www lb-01 web-01 web-02; do
-			display_info "$domain" $sub
-		done
-	fi
-}
-
-# Call the main function with all script arguments
-main "$@"
+if [ "$#" -eq 2 ]
+then
+    print_domain_subdomain "$2.$1" "$2"
+else
+    print_domain_subdomain "www.$1" "www"
+    print_domain_subdomain "lb-01.$1" "lb-01"
+    print_domain_subdomain "web-01.$1" "web-01"
+    print_domain_subdomain "web-02.$1" "web-02"
+fi
