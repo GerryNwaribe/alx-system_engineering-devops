@@ -2,46 +2,33 @@
 # Function to display subdomain information
 
 print_domain_subdomain() {
-	local subdomain="$1"
-	local ip_address="$2"
-	local record_type="A"  # Assuming all are A records for simplicity
+	local full_domain="$1"
+	local subdomain="$2"
+
+    # Get the DNS query result
+    result=$(dig +short "$full_domain")
+
+    if [ -z "$result" ]; then
+	    echo "No records found for $subdomain.$domain"
+	    return
+    fi
+
+    # Get the record type
+    record_type=$(dig +noall +answer "$full_domain" | awk '{print $4}' | head -n 1)
 
     # Output the information
-    echo "The subdomain $subdomain is a $record_type record and points to $ip_address"
+    echo "The subdomain $subdomain is a $record_type record and points to $result"
 }
 
-# Main Execution
-domain="$1"
-subdomain="$2"
-
-# IP addresses
-lb_ip="54.236.220.236"
-web_01_ip="54.146.84.100"
-web_02_ip="100.26.167.136"
-
-# Check if two arguments are provided
+# Check if the correct number of arguments is provided
 if [ "$#" -eq 2 ]; then
-	case "$subdomain" in
-		www)
-			print_domain_subdomain "$subdomain.$domain" "$subdomain" "$lb_ip"
-			;;
-		lb-01)
-			print_domain_subdomain "$subdomain.$domain" "$subdomain" "$lb_ip"
-			;;
-		web-01)
-			print_domain_subdomain "$subdomain.$domain" "$subdomain" "$web_01_ip"
-			;;
-		web-02)
-			print_domain_subdomain "$subdomain.$domain" "$subdomain" "$web_02_ip"
-			;;
-		*)
-			echo "Unknown subdomain: $subdomain"
-			;;
-	esac
+	domain="$1"
+	subdomain="$2"
+	print_domain_subdomain "$subdomain.$domain" "$subdomain"
 else
-	# Default subdomains and their IP addresses
-	print_domain_subdomain "www.$domain" "www" "$lb_ip"
-	print_domain_subdomain "lb-01.$domain" "lb-01" "$lb_ip"
-	print_domain_subdomain "web-01.$domain" "web-01" "$web_01_ip"
-	print_domain_subdomain "web-02.$domain" "web-02" "$web_02_ip"
+	domain="$1"
+	print_domain_subdomain "www.$domain" "www" "54.236.220.236"
+	print_domain_subdomain "lb-01.$domain" "lb-01" 
+	print_domain_subdomain "web-01.$domain" "web-01" "54.146.84.100"
+	print_domain_subdomain "web-02.$domain" "web-02" "100.26.167.136"
 fi
