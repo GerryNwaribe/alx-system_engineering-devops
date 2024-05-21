@@ -27,7 +27,7 @@ if [ "$#" -eq 2 ]; then
 	print_domain_subdomain "$subdomain.$domain" "$subdomain"
 else
 	domain="$1"
-	print_domain_subdomain "www.$domain" "www" "54.236.220.236"
+	print_domain_subdomain "www.$domain" "www" "lb-01"
 	print_domain_subdomain "lb-01.$domain" "lb-01" 
 	print_domain_subdomain "web-01.$domain" "web-01" "54.146.84.100"
 	print_domain_subdomain "web-02.$domain" "web-02" "100.26.167.136"
